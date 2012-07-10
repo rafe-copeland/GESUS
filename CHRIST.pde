@@ -5,7 +5,7 @@ class CHRIST {
 	
 	String[] timeFields;
 	int[] timeFieldsI;
-	float[] colours = {255,255,255,255};
+	float[] colours = {120,255,120,155};
 	int yearI;
 	int monthI;
 	int dateI;

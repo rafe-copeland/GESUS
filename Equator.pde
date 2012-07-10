@@ -186,11 +186,34 @@ static class Equator {
 	}
 	
 	boolean testTime(int[] tFields) {
-		if(tFields[4]+mInterval<60 && minuteInt+mInterval>tFields[4]){
-			return true;
+				
+		if(minuteInt<=tFields[4] && minuteInt+mInterval>=tFields[4] && minuteInt+mInterval<60) {
+			if(minuteInt==tFields[4]) {
+				if(secondInt>=tFields[5]) return true;
+				else return false;
+			}
+			else if(minuteInt<tFields[4] && minuteInt+mInterval>tFields[4]) {
+				return true;
+			}
+			else if(minuteInt+mInterval==tFields[4]) {
+				if(secondInt<tFields[5]) return true;
+				else return false;
+			}
+			else return false;
 		}
-		else if(tFields[4]+mInterval>60 && tFields[3]<23 && minuteInt+mInterval-60>tFields[4]) {
-			return true;
+		else if(minuteInt+mInterval>=60 && tFields[3]<23 && (minuteInt+mInterval-60>=tFields[4] || tFields[4]>=minuteInt)) {
+			if(minuteInt==tFields[4]) {
+				if(secondInt>=tFields[5]) return true;
+				else return false;
+			}
+			else if(minuteInt<tFields[4] || minuteInt+mInterval-60>tFields[4]) {
+				return true;
+			}
+			else if(minuteInt+mInterval-60==tFields[4]) {
+				if(secondInt<tFields[5]) return true;
+				else return false;
+			}
+			else return false;
 		}
 		else return false;
 	}

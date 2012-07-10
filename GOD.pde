@@ -29,6 +29,7 @@ class GOD {
 	private ArrayList currentColours;
 	private GLModel currentModel;
 	private int currentModelIndex;
+	private int previousModelIndex;
 
 
 	GOD(PApplet p,XMLElement GODLayer) {
@@ -74,7 +75,7 @@ class GOD {
 					}
 				}
 				latitudeIndex = int(metaValues.get("latitude").toString());
-				longitudeIndex = int(metaValues.get("latitude").toString());
+				longitudeIndex = int(metaValues.get("longitude").toString());
 				timeIndex = int(metaValues.get("time").toString());
 			}
 			else {
@@ -111,6 +112,8 @@ class GOD {
 	void createCurrentModel() {
 		currentModel = new GLModel(parent, maxChrists, POINTS, GLModel.STREAM);
 		currentModel.initColors();
+		currentModel.setPointSize(1.5);
+		currentModel.setBlendMode(BLEND);
 		updateCurrentModel();
 		
 	}
@@ -150,14 +153,14 @@ class GOD {
 				}
 			}
 		}
-		println(currentModelIndex);
+		if(currentModelIndex!=previousModelIndex) println(name+" has changed number of displayed points to: "+currentModelIndex);
 		currentModel.beginUpdateVertices();
 		noFill();
 		strokeWeight(3);
 		stroke(255,0,0);
 		for(int i=0;i<currentModelIndex;i++) {
 			currentModel.updateVertex(i,(Float) currentVertices.get(3*i),(Float) currentVertices.get(3*i+1),(Float) currentVertices.get(3*i+2));
-			point((Float) currentVertices.get(3*i),(Float) currentVertices.get(3*i+1),(Float) currentVertices.get(3*i+2));
+			//point((Float) currentVertices.get(3*i),(Float) currentVertices.get(3*i+1),(Float) currentVertices.get(3*i+2));
 		}
 		currentModel.endUpdateVertices();
 		currentModel.beginUpdateColors();
@@ -165,8 +168,7 @@ class GOD {
 			currentModel.updateColor(i,(Float) currentColours.get(4*i),(Float) currentColours.get(4*i+1),(Float) currentColours.get(4*i+2),(Float) currentColours.get(4*i+3));
 		}
 		currentModel.endUpdateColors();
-		println(currentVertices.size());
-		println(currentColours.size());
+		previousModelIndex = currentModelIndex;
 	}
 	
 
@@ -174,7 +176,7 @@ class GOD {
 		GLGraphics renderer = (GLGraphics) g;
 		renderer.beginGL();
 		updateCurrentModel();
-		//currentModel.render(0,currentModelIndex-1);
+		currentModel.render(0,currentModelIndex-1);
 		renderer.endGL();
 	}
 

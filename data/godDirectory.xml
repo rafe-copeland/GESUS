@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <god>
-	<!-- <godLayer>
+	<godLayer>
 			<name>Earthquake Data February 14 2012</name>
 			<source>USGS</source>
 			<path>godData/earthquakes_one-day_2012-02-14.csv</path>
 			<filetype>csv</filetype>
 			<separator>,</separator>
+			<pointSize>10</pointSize>
+			<colour>255,120,120,200</colour>
 			<values>
-				<value>year</value>
-				<value>month</value>
-				<value>day</value>
 				<value>time</value>
 				<value>latitude</value>
 				<value>longitude</value>
@@ -17,7 +16,7 @@
 				<value>depth</value>
 				<value>source</value>
 			</values>
-		</godLayer> -->
+		</godLayer>
 
 	<godLayer>
 		<name>Twitter Data February 14 2012</name>
@@ -25,6 +24,8 @@
 		<path>godData/tweets_one-day_min.csv</path>
 		<filetype>csv</filetype>
 		<separator>,</separator>
+		<pointSize>1.5</pointSize>
+		<colour>120,255,120,100</colour>
 		<values>
 			<value>time</value>
 			<value>userID</value>

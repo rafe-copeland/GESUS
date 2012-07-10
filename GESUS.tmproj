@@ -22,7 +22,7 @@
 			<key>filename</key>
 			<string>GOD.pde</string>
 			<key>lastUsed</key>
-			<date>2012-07-07T15:06:34Z</date>
+			<date>2012-07-10T23:31:51Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -30,7 +30,7 @@
 			<key>filename</key>
 			<string>Planet.pde</string>
 			<key>lastUsed</key>
-			<date>2012-07-07T13:32:09Z</date>
+			<date>2012-07-10T22:26:28Z</date>
 		</dict>
 		<dict>
 			<key>expanded</key>
@@ -56,7 +56,7 @@
 			<key>filename</key>
 			<string>CHRIST.pde</string>
 			<key>lastUsed</key>
-			<date>2012-07-07T14:56:19Z</date>
+			<date>2012-07-10T23:31:51Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -68,9 +68,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>20</integer>
+				<integer>35</integer>
 				<key>line</key>
-				<integer>26</integer>
+				<integer>7</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -110,14 +110,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>3</integer>
+				<integer>35</integer>
 				<key>line</key>
-				<integer>28</integer>
+				<integer>115</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>94</integer>
 		</dict>
 		<key>Planet.pde</key>
 		<dict>
@@ -133,49 +133,19 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>data/godData/tweets_one-day_min.csv</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>data/godDirectory.xml</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>17</integer>
+				<integer>25</integer>
 				<key>line</key>
-				<integer>19</integer>
+				<integer>27</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>2</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>17</integer>
-				<key>line</key>
-				<integer>19</integer>
-			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -186,11 +156,10 @@
 		<string>CHRIST.pde</string>
 		<string>Planet.pde</string>
 		<string>data/godDirectory.xml</string>
-		<string>data/godData/tweets_one-day_min.csv</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-0, 4}, {1365, 1414}}</string>
+	<string>{{9, 4}, {1335, 1024}}</string>
 </dict>
 </plist>
