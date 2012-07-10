@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<god>
+	<!-- <godLayer>
+			<name>Earthquake Data February 14 2012</name>
+			<source>USGS</source>
+			<path>godData/earthquakes_one-day_2012-02-14.csv</path>
+			<filetype>csv</filetype>
+			<separator>,</separator>
+			<values>
+				<value>year</value>
+				<value>month</value>
+				<value>day</value>
+				<value>time</value>
+				<value>latitude</value>
+				<value>longitude</value>
+				<value>magnitude</value>
+				<value>depth</value>
+				<value>source</value>
+			</values>
+		</godLayer> -->
+
+	<godLayer>
+		<name>Twitter Data February 14 2012</name>
+		<source>Bartosz</source>
+		<path>godData/tweets_one-day_min.csv</path>
+		<filetype>csv</filetype>
+		<separator>,</separator>
+		<values>
+			<value>time</value>
+			<value>userID</value>
+			<value>latitude</value>
+			<value>longitude</value>
+		</values>
+	</godLayer>
+</god>
