@@ -42,6 +42,8 @@ PFont inconsolata;
 void setup() {
 
 	size(screen.width,screen.height-50,GLConstants.GLGRAPHICS); //MUST be set to GLConstants.GLGRAPHICS
+	GLGraphics renderer = (GLGraphics) g;
+	renderer.beginGL();
 	setOpenGLParameters(); //MUST run first to avoid problems
 	
 	inconsolata = loadFont("Inconsolata-16.vlw");
@@ -66,6 +68,7 @@ void setup() {
 	cameraZ = (height/2.0) / tan(PI*60/360.0);
 
 	camera(cameraX, cameraY, cameraZ, width/2.0, height/2.0, 0, 0, 1, 0);
+	renderer.endGL();
 
 }
 

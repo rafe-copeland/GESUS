@@ -27,8 +27,8 @@ class Planet {
 		pDeclinate(equator.solarDeclination(equator.getDay())); //Tilts the planet to the solar declination
 		pRotate(equator.getRotation(equator.getJulianDayNumber()));
 		drawMeridians();
-		drawGeography();
 		conductGODInputs();
+		drawGeography();
 		popMatrix(); //pops rotation matrix
 		popMatrix(); //pops declination matrix
 		drawNight("DISABLE"); //use "PLANE" or "ELLIPSE", or "DISABLE"
@@ -123,6 +123,7 @@ class Planet {
 
 	void drawGeography() {
 		stroke(255,255);
+		strokeWeight(1);
 		//    fill(255,50);
 		for (int i = 0; i < planetGeography.getTrackCount(); i++) {
 			GPXTrack trk = planetGeography.getTrack(i);

@@ -119,7 +119,7 @@ class GOD {
 		currentModel.setTexture(0,currentModelTexture);
 		currentModel.setMaxSpriteSize(0.9*pmax);
 		currentModel.setSpriteSize(20, 100);
-		currentModel.setBlendMode(BLEND);
+		currentModel.setBlendMode(ADD);
 		updateCurrentModel();
 		
 	}
@@ -179,13 +179,10 @@ class GOD {
 	
 
 	void drawData() {	
-		GLGraphics renderer = (GLGraphics) g;
-		renderer.beginGL();
 		//renderer.setDepthMask(false);
 		updateCurrentModel();
 		currentModel.render(0,currentModelIndex-1);
 		//renderer.setDepthMask(true);
-		renderer.endGL();
 	}
 
 }
