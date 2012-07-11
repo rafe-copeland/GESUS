@@ -28,6 +28,7 @@ class GOD {
 	private ArrayList currentVertices;
 	private ArrayList currentColours;
 	private GLModel currentModel;
+	private GLTexture currentModelTexture;
 	private int currentModelIndex;
 	private int previousModelIndex;
 
@@ -110,9 +111,14 @@ class GOD {
 	}
 	
 	void createCurrentModel() {
-		currentModel = new GLModel(parent, maxChrists, POINTS, GLModel.STREAM);
+		currentModel = new GLModel(parent, maxChrists, POINT_SPRITES, GLModel.STREAM);
 		currentModel.initColors();
-		currentModel.setPointSize(1.5);
+		currentModelTexture = new GLTexture(parent, "textures/particle.png");
+		float pmax = currentModel.getMaxPointSize();
+		currentModel.initTextures(1);
+		currentModel.setTexture(0,currentModelTexture);
+		currentModel.setMaxSpriteSize(0.9*pmax);
+		currentModel.setSpriteSize(20, 100);
 		currentModel.setBlendMode(BLEND);
 		updateCurrentModel();
 		
@@ -175,8 +181,10 @@ class GOD {
 	void drawData() {	
 		GLGraphics renderer = (GLGraphics) g;
 		renderer.beginGL();
+		//renderer.setDepthMask(false);
 		updateCurrentModel();
 		currentModel.render(0,currentModelIndex-1);
+		//renderer.setDepthMask(true);
 		renderer.endGL();
 	}
 

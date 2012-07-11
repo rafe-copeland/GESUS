@@ -93,16 +93,11 @@ void draw() {
 
 void setOpenGLParameters()
 {
-	pgl = (PGraphicsOpenGL) g;
-	gl = pgl.beginGL();
-	gl.glHint (gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST);
-	gl.glEnable (gl.GL_LINE_SMOOTH);
-	hint(DISABLE_OPENGL_2X_SMOOTH);
-	hint(ENABLE_OPENGL_4X_SMOOTH);
-	hint(DISABLE_OPENGL_ERROR_REPORT);
-	hint(DISABLE_DEPTH_SORT);
-	gl.setSwapInterval(1); // use value 0 to disable v-sync
-	pgl.endGL();
+	GLGraphics renderer = (GLGraphics) g;
+	renderer.beginGL();
+	renderer.setDepthMask(false);
+	renderer.setBlendMode(ADD);
+	renderer.endGL();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
