@@ -80,8 +80,8 @@ class Planet {
 		pushMatrix();
 		translate(0, 0, dSpherePointToMaskCentreZ);
 		if (method=="PLANE") {
-			//rectMode(RADIUS);
-			//rect(0, 0, width*2, height*2);
+			rectMode(RADIUS);
+			rect(0, 0, width*2, height*2);
 			
 		}
 		else if (method=="ELLIPSE") {
