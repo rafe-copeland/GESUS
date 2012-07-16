@@ -179,10 +179,8 @@ class GOD {
 	
 
 	void drawData() {	
-		//renderer.setDepthMask(false);
 		updateCurrentModel();
 		currentModel.render(0,currentModelIndex-1);
-		//renderer.setDepthMask(true);
 	}
 
 }

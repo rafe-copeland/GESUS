@@ -80,8 +80,9 @@ class Planet {
 		pushMatrix();
 		translate(0, 0, dSpherePointToMaskCentreZ);
 		if (method=="PLANE") {
-			rectMode(RADIUS);
-			rect(0, 0, width*2, height*2);
+			//rectMode(RADIUS);
+			//rect(0, 0, width*2, height*2);
+			
 		}
 		else if (method=="ELLIPSE") {
 			ellipse(0, 0, maskRadius+2, maskRadius+2);
@@ -169,10 +170,21 @@ class Planet {
 	}
 	
 	void conductGODInputs() {
+		
+		//But if I just keep this one then it seems to be OK
+		GLGraphics renderer = (GLGraphics) g;
+		renderer.beginGL();
+		//dunno why.
+		
 		for(int i=0;i<godInputs.size();i++){
 			GOD godInstance = (GOD) godInputs.get(i);
 			godInstance.drawData();
 		}
+		
+		//
+		renderer.endGL();
+		//
+		
 	}
 
 }

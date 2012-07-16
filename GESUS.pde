@@ -79,6 +79,13 @@ void setup() {
 // DRAW FUNCTION /////////////////////////////////////////////////////////////////////////////////
 
 void draw() {
+	
+	//If I put everything inside this GLGraphics object then stuff goes nuts
+	//The other one that kinda works is in the Planet class, in the function conductGODInputs()
+	//GLGraphics renderer = (GLGraphics) g;
+	//renderer.beginGL();
+	//Dunno why.
+	
 	background(0);
 	drawTicker();
 	equator.setTimes();
@@ -86,6 +93,11 @@ void draw() {
 	translate(earth.pCentrePoint.x,earth.pCentrePoint.y,earth.pCentrePoint.z);
 	rotateZ(PI);
 	earth.plot();
+	
+	//
+	//renderer.endGL();
+	//
+	
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,6 +110,8 @@ void setOpenGLParameters()
 {
 	GLGraphics renderer = (GLGraphics) g;
 	renderer.beginGL();
+	hint(DISABLE_OPENGL_2X_SMOOTH);
+	hint(ENABLE_OPENGL_4X_SMOOTH);
 	renderer.setDepthMask(false);
 	renderer.setBlendMode(ADD);
 	renderer.endGL();
