@@ -3,34 +3,34 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>GESUS.pde</string>
+	<string>Planet.pde</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>Equator.pde</string>
 			<key>lastUsed</key>
-			<date>2012-07-16T12:51:59Z</date>
+			<date>2012-07-16T13:38:37Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>GESUS.pde</string>
 			<key>lastUsed</key>
-			<date>2012-07-16T13:02:18Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2012-07-16T14:42:16Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>GOD.pde</string>
 			<key>lastUsed</key>
-			<date>2012-07-16T12:52:16Z</date>
+			<date>2012-07-16T15:38:01Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>Planet.pde</string>
 			<key>lastUsed</key>
-			<date>2012-07-16T13:02:18Z</date>
+			<date>2012-07-16T15:38:06Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>expanded</key>
@@ -56,7 +56,7 @@
 			<key>filename</key>
 			<string>CHRIST.pde</string>
 			<key>lastUsed</key>
-			<date>2012-07-16T12:51:43Z</date>
+			<date>2012-07-16T15:38:06Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -96,42 +96,42 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>15</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>88</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>44</integer>
 		</dict>
 		<key>GOD.pde</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>32</integer>
+				<integer>45</integer>
 				<key>line</key>
-				<integer>184</integer>
+				<integer>182</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>118</integer>
 		</dict>
 		<key>Planet.pde</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>11</integer>
+				<integer>78</integer>
 				<key>line</key>
-				<integer>95</integer>
+				<integer>41</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>110</integer>
+			<integer>0</integer>
 		</dict>
 		<key>data/godDirectory.xml</key>
 		<dict>

@@ -23,7 +23,6 @@ class Planet {
 	}
 
 	void plot() {
-		pushMatrix();
 		pDeclinate(equator.solarDeclination(equator.getDay())); //Tilts the planet to the solar declination
 		pRotate(equator.getRotation(equator.getJulianDayNumber()));
 		drawMeridians();
@@ -32,12 +31,15 @@ class Planet {
 		popMatrix(); //pops rotation matrix
 		popMatrix(); //pops declination matrix
 		drawNight("DISABLE"); //use "PLANE" or "ELLIPSE", or "DISABLE"
+		GLGraphics renderer = (GLGraphics) g;
+		renderer.beginGL();
 		drawMask("PLANE"); //use "PLANE" or "ELLIPSE", or "DISABLE"
+		renderer.endGL();
 	}
 
 	void pRotate(double pMiddayLongitude) {
 		pushMatrix();
-		rotateY(-HALF_PI); //resets orbit so midday is over 0 degrees longitude (greenwich)
+		rotateY(-HALF_PI); //resets orbit so midday is over 0 degrees longitude (UTC)
 
 		rotateY((float) pMiddayLongitude);
 	}
@@ -76,7 +78,7 @@ class Planet {
 		float dSpherePointToMaskCentreZ = sqrt(sq(pRadius)-sq(maskRadius));
 		ellipseMode(RADIUS);
 		noStroke();
-		fill(0, pDarksideVisibility);
+		fill(0,255,0, pDarksideVisibility);
 		pushMatrix();
 		translate(0, 0, dSpherePointToMaskCentreZ);
 		if (method=="PLANE") {
@@ -140,6 +142,7 @@ class Planet {
 			}
 		}
 	}
+	
 	void makeGeographyVertex(double latitude, double longitude) {
 
 		float lat = (float)latitude;
@@ -157,6 +160,7 @@ class Planet {
 
 
 	void pDeclinate(double declinationAngle) {
+		pushMatrix();
 		rotateX((float) declinationAngle);
 	}
 
