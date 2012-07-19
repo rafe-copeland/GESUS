@@ -55,7 +55,7 @@ void setup() {
 	
 	mInterval = 10; //must be a factor of 60
 
-	earth = new Planet();
+	earth = new Planet(this);
 	planetGeography = new GPX(this);
 	planetGeography.parse("continents.gpx");
 	equator = new Equator(earth.pRadius, mInterval);
@@ -90,9 +90,11 @@ void draw() {
 	drawTicker();
 	equator.setTimes();
 	equator.getDay();
+	pushMatrix();
 	translate(earth.pCentrePoint.x,earth.pCentrePoint.y,earth.pCentrePoint.z);
 	rotateZ(PI);
 	earth.plot();
+	popMatrix();
 	
 	//
 	//renderer.endGL();

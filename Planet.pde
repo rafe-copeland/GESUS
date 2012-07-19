@@ -1,46 +1,55 @@
 class Planet {
+	PApplet parent; //reference to GESUS
 	private float pRadius;
 	private int pAspect;
 	private int pLongitudeLineIncrement;
 	private int pLatitudeLineIncrement;
 	private int pDepth;
 	private int pDarksideVisibility;
+	private float SINCOS_PRECISION = 0.5;
+	private int SINCOS_LENGTH = int(360.0 / SINCOS_PRECISION);
 	private String pGeographyFile;
 	private PVector pCentrePoint;
 	private float pSolarDeclination;
 	private ArrayList godInputs;
+	private GLModel sphere;
+	private ArrayList vertices;
+	private int sphereDetail;
 
-	Planet() {  
+	Planet(PApplet p) {  
+		parent = p;
 		pRadius = 1.8*int(min(height, width)*0.4);
 		pAspect = 0;
 		pLongitudeLineIncrement = 10;
 		pLatitudeLineIncrement = 10;
 		pDepth = 1000;
+		sphereDetail = 35;
 		pCentrePoint = new PVector(width/2, height/2, -pDepth);
 		pDarksideVisibility = 175; //set the opacity of the darkside of the Earth (0-255)
 		pGeographyFile = "continents.gpx"; //GPX file containing the earth's geography
 		godInputs = new ArrayList();
+		calculateSphereCoords();
+		sphere = new GLModel(parent, vertices.size(), TRIANGLE_STRIP, GLModel.STATIC);
+		sphere.updateVertices(vertices);
+		sphere.initColors();
+		sphere.setColors(0,25);
 	}
 
 	void plot() {
 		pDeclinate(equator.solarDeclination(equator.getDay())); //Tilts the planet to the solar declination
 		pRotate(equator.getRotation(equator.getJulianDayNumber()));
 		drawMeridians();
-		conductGODInputs();
+		plotGL();
 		drawGeography();
 		popMatrix(); //pops rotation matrix
 		popMatrix(); //pops declination matrix
 		drawNight("DISABLE"); //use "PLANE" or "ELLIPSE", or "DISABLE"
-		GLGraphics renderer = (GLGraphics) g;
-		renderer.beginGL();
 		drawMask("PLANE"); //use "PLANE" or "ELLIPSE", or "DISABLE"
-		renderer.endGL();
 	}
 
 	void pRotate(double pMiddayLongitude) {
 		pushMatrix();
 		rotateY(-HALF_PI); //resets orbit so midday is over 0 degrees longitude (UTC)
-
 		rotateY((float) pMiddayLongitude);
 	}
 
@@ -78,7 +87,7 @@ class Planet {
 		float dSpherePointToMaskCentreZ = sqrt(sq(pRadius)-sq(maskRadius));
 		ellipseMode(RADIUS);
 		noStroke();
-		fill(0,255,0, pDarksideVisibility);
+		fill(0, pDarksideVisibility);
 		pushMatrix();
 		translate(0, 0, dSpherePointToMaskCentreZ);
 		if (method=="PLANE") {
@@ -175,20 +184,155 @@ class Planet {
 	
 	void conductGODInputs() {
 		
-		//But if I just keep this one then it seems to be OK
-		GLGraphics renderer = (GLGraphics) g;
-		renderer.beginGL();
-		//dunno why.
+		//iterate through all GODs and draw their datapoint GLModels
 		
 		for(int i=0;i<godInputs.size();i++){
 			GOD godInstance = (GOD) godInputs.get(i);
 			godInstance.drawData();
-		}
+		}		
+	}
+	
+	void plotGL() {
 		
-		//
+		//Reset matrix ready for GL drawing
+		popMatrix(); //pops rotation matrix
+		popMatrix(); //pops declination matrix
+		popMatrix(); //pops to-centre matrix
+		
+		GLGraphics renderer = (GLGraphics) g;
+		renderer.beginGL();
+		
+		
+		//Construct matrix for GL drawing
+		pushMatrix();
+		translate(earth.pCentrePoint.x,earth.pCentrePoint.y,earth.pCentrePoint.z);
+		rotateZ(PI);
+		pDeclinate(equator.solarDeclination(equator.getDay()));
+		pRotate(equator.getRotation(equator.getJulianDayNumber()));
+		
+		//Draw for GL
+		drawSphere();
+		conductGODInputs();
+		
 		renderer.endGL();
-		//
 		
+		//Revert matrix for further non-GL drawing
+		pushMatrix();
+		translate(earth.pCentrePoint.x,earth.pCentrePoint.y,earth.pCentrePoint.z);
+		rotateZ(PI);
+		pDeclinate(equator.solarDeclination(equator.getDay()));
+		pRotate(equator.getRotation(equator.getJulianDayNumber()));
+	}
+	
+	void calculateSphereCoords()
+	{
+		float[] cx, cz, sphereX, sphereY, sphereZ;
+		float sinLUT[];
+		float cosLUT[];
+		float delta, angle_step, angle;
+		int vertCount, currVert;
+		float r;
+		int v1, v11, v2, voff;
+
+		sinLUT = new float[SINCOS_LENGTH];
+		cosLUT = new float[SINCOS_LENGTH];
+
+		for (int i = 0; i < SINCOS_LENGTH; i++) 
+		{
+			sinLUT[i] = (float) Math.sin(i * DEG_TO_RAD * SINCOS_PRECISION);
+			cosLUT[i] = (float) Math.cos(i * DEG_TO_RAD * SINCOS_PRECISION);
+		}  
+
+		delta = float(SINCOS_LENGTH / sphereDetail);
+		cx = new float[sphereDetail];
+		cz = new float[sphereDetail];
+
+		// Calc unit circle in XZ plane
+		for (int i = 0; i < sphereDetail; i++) 
+		{
+			cx[i] = -cosLUT[(int) (i * delta) % SINCOS_LENGTH];
+			cz[i] = sinLUT[(int) (i * delta) % SINCOS_LENGTH];
+		}
+
+		// Computing vertexlist vertexlist starts at south pole
+		vertCount = sphereDetail * (sphereDetail - 1) + 2;
+		currVert = 0;
+
+		// Re-init arrays to store vertices
+		sphereX = new float[vertCount];
+		sphereY = new float[vertCount];
+		sphereZ = new float[vertCount];
+		angle_step = (SINCOS_LENGTH * 0.5f) / sphereDetail;
+		angle = angle_step;
+
+		// Step along Y axis
+		for (int i = 1; i < sphereDetail; i++) 
+		{
+			float curradius = sinLUT[(int) angle % SINCOS_LENGTH];
+			float currY = -cosLUT[(int) angle % SINCOS_LENGTH];
+			for (int j = 0; j < sphereDetail; j++) 
+			{
+				sphereX[currVert] = cx[j] * curradius;
+				sphereY[currVert] = currY;
+				sphereZ[currVert++] = cz[j] * curradius;
+			}
+			angle += angle_step;
+		}
+
+		vertices = new ArrayList();
+
+		r = pRadius;
+
+		// Add the southern cap    
+
+		for (int i = 0; i < sphereDetail; i++) 
+		{
+			addVertex(0.0, -r, 0.0);
+			addVertex(sphereX[i] * r, sphereY[i] * r, sphereZ[i] * r);        
+		}
+		addVertex(0.0, -r, 0.0);
+		addVertex(sphereX[0] * r, sphereY[0] * r, sphereZ[0] * r);
+
+		// Middle rings
+		voff = 0;
+		for (int i = 2; i < sphereDetail; i++) 
+		{
+			v1 = v11 = voff;
+			voff += sphereDetail;
+			v2 = voff;   
+			for (int j = 0; j < sphereDetail; j++) 
+			{
+				addVertex(sphereX[v1] * r, sphereY[v1] * r, sphereZ[v1++] * r);
+				addVertex(sphereX[v2] * r, sphereY[v2] * r, sphereZ[v2++] * r);
+			}
+
+			// Close each ring
+			v1 = v11;
+			v2 = voff;
+			addVertex(sphereX[v1] * r, sphereY[v1] * r, sphereZ[v1] * r);
+			addVertex(sphereX[v2] * r, sphereY[v2] * r, sphereZ[v2] * r);
+		}
+
+		// Add the northern cap
+		for (int i = 0; i < sphereDetail; i++) 
+		{
+			v2 = voff + i;
+
+			addVertex(sphereX[v2] * r, sphereY[v2] * r, sphereZ[v2] * r);
+			addVertex(0, r, 0);
+
+		}
+		addVertex(sphereX[voff] * r, sphereY[voff] * r, sphereZ[voff] * r);
+	}
+
+	void addVertex(float x, float y, float z)
+	{
+		PVector vert = new PVector(x, y, z);
+		vertices.add(vert);
+	}
+	
+	void drawSphere() {
+		sphere.render();
 	}
 
 }
