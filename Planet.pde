@@ -5,6 +5,7 @@ class Planet {
 	private int pLongitudeLineIncrement;
 	private int pLatitudeLineIncrement;
 	private int pDepth;
+	private int pSphereOpacity;
 	private int pDarksideVisibility;
 	private float SINCOS_PRECISION = 0.5;
 	private int SINCOS_LENGTH = int(360.0 / SINCOS_PRECISION);
@@ -14,10 +15,14 @@ class Planet {
 	private ArrayList godInputs;
 	private GLModel sphere;
 	private ArrayList vertices;
+	private GLModel geography;
+	private ArrayList geoVertices;
 	private int sphereDetail;
 
 	Planet(PApplet p) {  
 		parent = p;
+		
+		//Planet settings
 		pRadius = 1.8*int(min(height, width)*0.4);
 		pAspect = 0;
 		pLongitudeLineIncrement = 10;
@@ -25,14 +30,13 @@ class Planet {
 		pDepth = 1000;
 		sphereDetail = 35;
 		pCentrePoint = new PVector(width/2, height/2, -pDepth);
-		pDarksideVisibility = 175; //set the opacity of the darkside of the Earth (0-255)
+		pSphereOpacity = 5; //set the opacity of the darkside of the Earth (0-255)
 		pGeographyFile = "continents.gpx"; //GPX file containing the earth's geography
+		
+		//Planet initialisation
 		godInputs = new ArrayList();
-		calculateSphereCoords();
-		sphere = new GLModel(parent, vertices.size(), TRIANGLE_STRIP, GLModel.STATIC);
-		sphere.updateVertices(vertices);
-		sphere.initColors();
-		sphere.setColors(0,25);
+		prepSphere();
+		prepGeography();
 	}
 
 	void plot() {
@@ -40,7 +44,7 @@ class Planet {
 		pRotate(equator.getRotation(equator.getJulianDayNumber()));
 		drawMeridians();
 		plotGL();
-		drawGeography();
+		//drawGeography();
 		popMatrix(); //pops rotation matrix
 		popMatrix(); //pops declination matrix
 		drawNight("DISABLE"); //use "PLANE" or "ELLIPSE", or "DISABLE"
@@ -51,6 +55,23 @@ class Planet {
 		pushMatrix();
 		rotateY(-HALF_PI); //resets orbit so midday is over 0 degrees longitude (UTC)
 		rotateY((float) pMiddayLongitude);
+	}
+	
+	void prepSphere() {
+		calculateSphereCoords();
+		sphere = new GLModel(parent, vertices.size(), TRIANGLE_STRIP, GLModel.STATIC);
+		sphere.updateVertices(vertices);
+		sphere.initColors();
+		sphere.setColors(0,0.5);
+	}
+	
+	void prepGeography() {
+		calculateGeographyCoords();
+		geography = new GLModel(parent, geoVertices.size(), LINES, GLModel.STATIC);
+		geography.updateVertices(geoVertices);
+		geography.initColors();
+		geography.setColors(255);
+		geography.setBlendMode(ADD);
 	}
 
 	void drawMeridians() {
@@ -152,6 +173,36 @@ class Planet {
 		}
 	}
 	
+	void calculateGeographyCoords() {
+		geoVertices = new ArrayList();
+		for (int i = 0; i < planetGeography.getTrackCount(); i++) {
+			GPXTrack trk = planetGeography.getTrack(i);
+			for (int j = 0; j < trk.size(); j++) {
+				GPXTrackSeg trkseg = trk.getTrackSeg(j);
+				for (int k = 0; k < trkseg.size(); k++) {
+					GPXPoint pt = trkseg.getPoint(k);
+					addGeographyVertex(pt);
+					if(k!=0 && k!=trkseg.size()-1) {
+						addGeographyVertex(pt); //duplicate interior points
+					}
+				}
+			}
+		}
+	}
+	
+	void addGeographyVertex(GPXPoint p) {
+		GPXPoint pt = p;
+		float lat = radians((float)pt.lat);
+		float lng = radians((float)pt.lon);
+		float calc1 = (pRadius)*cos(lat);
+		float pX = calc1 * cos(lng);
+		float pY = (pRadius) * sin(lat);
+		float pZ = calc1 * sin(lng);
+		
+		PVector vert = new PVector(pX,pY,pZ);
+		geoVertices.add(vert);
+	}
+	
 	void makeGeographyVertex(double latitude, double longitude) {
 
 		float lat = (float)latitude;
@@ -201,6 +252,7 @@ class Planet {
 		
 		GLGraphics renderer = (GLGraphics) g;
 		renderer.beginGL();
+		renderer.setDepthMask(false);
 		
 		
 		//Construct matrix for GL drawing
@@ -211,9 +263,11 @@ class Planet {
 		pRotate(equator.getRotation(equator.getJulianDayNumber()));
 		
 		//Draw for GL
-		drawSphere();
+		sphere.render();
+		geography.render();
 		conductGODInputs();
-		
+
+		renderer.setDepthMask(true);
 		renderer.endGL();
 		
 		//Revert matrix for further non-GL drawing
@@ -329,10 +383,6 @@ class Planet {
 	{
 		PVector vert = new PVector(x, y, z);
 		vertices.add(vert);
-	}
-	
-	void drawSphere() {
-		sphere.render();
 	}
 
 }
