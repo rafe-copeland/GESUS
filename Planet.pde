@@ -30,7 +30,7 @@ class Planet {
 		pDepth = 1000;
 		sphereDetail = 35;
 		pCentrePoint = new PVector(width/2, height/2, -pDepth);
-		pSphereOpacity = 5; //set the opacity of the darkside of the Earth (0-255)
+		pSphereOpacity = 75; //set the opacity of the darkside of the Earth (0-255)
 		pGeographyFile = "continents.gpx"; //GPX file containing the earth's geography
 		
 		//Planet initialisation
@@ -62,7 +62,7 @@ class Planet {
 		sphere = new GLModel(parent, vertices.size(), TRIANGLE_STRIP, GLModel.STATIC);
 		sphere.updateVertices(vertices);
 		sphere.initColors();
-		sphere.setColors(0,0.5);
+		sphere.setColors(0,pSphereOpacity);
 	}
 	
 	void prepGeography() {
@@ -71,7 +71,6 @@ class Planet {
 		geography.updateVertices(geoVertices);
 		geography.initColors();
 		geography.setColors(255);
-		geography.setBlendMode(ADD);
 	}
 
 	void drawMeridians() {
@@ -263,8 +262,8 @@ class Planet {
 		pRotate(equator.getRotation(equator.getJulianDayNumber()));
 		
 		//Draw for GL
-		sphere.render();
 		geography.render();
+		sphere.render();
 		conductGODInputs();
 
 		renderer.setDepthMask(true);

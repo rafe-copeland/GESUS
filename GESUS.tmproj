@@ -22,13 +22,13 @@
 			<key>filename</key>
 			<string>GOD.pde</string>
 			<key>lastUsed</key>
-			<date>2012-07-19T18:04:32Z</date>
+			<date>2012-07-20T15:37:22Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>Planet.pde</string>
 			<key>lastUsed</key>
-			<date>2012-07-19T18:04:35Z</date>
+			<date>2012-07-20T15:37:22Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -56,7 +56,7 @@
 			<key>filename</key>
 			<string>CHRIST.pde</string>
 			<key>lastUsed</key>
-			<date>2012-07-19T18:04:33Z</date>
+			<date>2012-07-20T15:37:22Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -110,14 +110,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>45</integer>
+				<integer>36</integer>
 				<key>line</key>
-				<integer>182</integer>
+				<integer>120</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>118</integer>
+			<integer>98</integer>
 		</dict>
 		<key>Planet.pde</key>
 		<dict>
@@ -126,12 +126,12 @@
 				<key>column</key>
 				<integer>29</integer>
 				<key>line</key>
-				<integer>332</integer>
+				<integer>253</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>317</integer>
+			<integer>223</integer>
 		</dict>
 		<key>data/godDirectory.xml</key>
 		<dict>
@@ -160,6 +160,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{0, 4}, {938, 1414}}</string>
+	<string>{{0, 4}, {938, 1024}}</string>
 </dict>
 </plist>

@@ -118,8 +118,7 @@ class GOD {
 		currentModel.initTextures(1);
 		currentModel.setTexture(0,currentModelTexture);
 		currentModel.setMaxSpriteSize(0.9*pmax);
-		currentModel.setSpriteSize(20, 100);
-		currentModel.setBlendMode(ADD);
+		currentModel.setSpriteSize(20, 150);
 		updateCurrentModel();
 		
 	}
